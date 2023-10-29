@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\PasteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('main');
+    return view('paste.create-paste');
 });
 
 Route::middleware('guest')->group(function () {
@@ -37,3 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::post('create-paste', [PasteController::class, 'store'])->name('create-paste');
+
+Route::get('{paste_uri}', [PasteController::class, 'show'])->name('show-paste');
