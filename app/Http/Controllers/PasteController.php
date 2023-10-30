@@ -14,6 +14,11 @@ use Illuminate\Http\Request;
 class PasteController extends Controller
 {
 
+    /**
+     * Create class.
+     *
+     * @param \App\Contracts\PasteRepositoryInterface $pasteRepository
+     */
     public function __construct(private PasteRepositoryInterface $pasteRepository)
     {
     }
@@ -46,13 +51,30 @@ class PasteController extends Controller
     /**
      * Display the specified paste.
      *
+     * @param \Illuminate\Http\Request $request
      * @param string $paste_uri
      *
      * @return Application|Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(string $paste_uri): Factory|View|Application {
+    public function show(Request $request, string $paste_uri): Factory|View|Application {
         $paste = $this->pasteRepository->findByUri($paste_uri);
+        if (!isset($paste)) {
+            abort(404);
+        }
+
+        $this->authorize('view', $paste);
         return view('paste.show-paste', ['paste' => $paste]);
+    }
+
+    /**
+     * Show user pastes.
+     *
+     * @return Application|Factory|View
+     */
+    public function showPastesForUser(): Factory|View|Application {
+        $pastes = $this->pasteRepository->getPastesPaginationByUser(auth()->id(), 10);
+        return view('paste.user-pastes', ['pastes' => $pastes]);
     }
 
 }

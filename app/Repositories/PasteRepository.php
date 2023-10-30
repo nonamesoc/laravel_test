@@ -7,6 +7,10 @@ namespace App\Repositories;
 use App\Contracts\PasteRepositoryInterface;
 use App\Enums\ExpireDate;
 use App\Models\Paste;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PasteRepository implements PasteRepositoryInterface
 {
@@ -31,6 +35,61 @@ class PasteRepository implements PasteRepositoryInterface
      */
     public function findByUri(string $uri): ?Paste
     {
-        return Paste::where('uri', $uri)->first();
+        $current_date = Carbon::now();
+        return Paste::where('uri', $uri)
+            ->where(function (Builder $query) use($current_date) {
+                $query->where('expire_date', '>=', $current_date)
+                    ->orWhereNull('expire_date');
+            })
+            ->first();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRecentPastes(int $limit = 10): Collection
+    {
+        $current_date = Carbon::now();
+        return Paste::where('access', 'public')
+            ->where(function (Builder $query) use($current_date) {
+                $query->where('expire_date', '>=', $current_date)
+                    ->orWhereNull('expire_date');
+            })
+            ->orderByDesc('created_at')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRecentPastesByUser(int $user_id, int $limit = 10): Collection
+    {
+        $current_date = Carbon::now();
+        return Paste::whereIn('access', ['public', 'private'])
+            ->where('user_id', $user_id)
+            ->where(function (Builder $query) use($current_date) {
+                $query->where('expire_date', '>=', $current_date)
+                    ->orWhereNull('expire_date');
+            })
+            ->orderByDesc('created_at')
+            ->take($limit)
+            ->get();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPastesPaginationByUser(int $user_id, int $limit = 10): LengthAwarePaginator
+    {
+        $current_date = Carbon::now();
+        return Paste::whereIn('access', ['public', 'private'])
+            ->where('user_id', $user_id)
+            ->where(function (Builder $query) use($current_date) {
+                $query->where('expire_date', '>=', $current_date)
+                    ->orWhereNull('expire_date');
+            })
+            ->paginate($limit);
+    }
+
 }

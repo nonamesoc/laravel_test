@@ -37,6 +37,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('user-pastes', [PasteController::class, 'showPastesForUser'])->name('user-pastes');
 });
 
 Route::post('create-paste', [PasteController::class, 'store'])->name('create-paste');

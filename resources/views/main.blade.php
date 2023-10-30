@@ -17,30 +17,41 @@
         @stack('scripts')
     </head>
     <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            <div class="sm:fixed sm:top-0 sm:left-0 p-6 text-left z-10">
-                <a href="{{ url('/') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Создать пасту</a>
-            </div>
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+        <div class="relative sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
+            <div class="sm:flex sm:justify-between">
+                <div class="sm:top-0 sm:left-0 p-6 text-left z-10">
+                    <a href="{{ url('/') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Создать пасту</a>
                     @auth
-                        <a href="{{ url('/') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Главная</a>
-                        <a href="{{ route('logout') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Выйти</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Войти</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Регистрация</a>
-                        @endif
+                        <a href="{{ route('user-pastes') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Мои пасты</a>
                     @endauth
                 </div>
-            @endif
-            @if (session()->has('status'))
-                <div>{{ session('status') }}</div>
-            @endif
+                @if (Route::has('login'))
+                    <div class="sm:top-0 sm:right-0 p-6 text-right z-10">
+                        @auth
+                            <a href="{{ route('logout') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Выйти</a>
+                        @else
+                            <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Войти</a>
+
+                            @if (Route::has('register'))
+                                <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Регистрация</a>
+                            @endif
+                        @endauth
+                    </div>
+                @endif
+            </div>
+
             <div>
-                <div class="mt-16">
-                    @yield('content')
+                <div class="sm:flex">
+                    <div style="margin-left: 30px; width: 70%;">
+                        @if (session()->has('status'))
+                            <div>{{ session('status') }}</div>
+                        @endif
+                        @yield('content')
+                    </div>
+                    <div style="margin-left: auto">
+                        @include('paste.recent-pastes')
+                        @include('paste.recent-user-pastes')
+                    </div>
                 </div>
 
                 <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
