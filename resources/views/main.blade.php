@@ -44,7 +44,7 @@
                 <div class="sm:flex">
                     <div style="margin-left: 30px; width: 70%;">
                         @if (session()->has('status'))
-                            <div>{{ session('status') }}</div>
+                            <div style="border: green solid;">{{ session('status') }}</div>
                         @endif
                         @yield('content')
                     </div>

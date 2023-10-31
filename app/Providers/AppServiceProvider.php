@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Contracts\ComplaintRepositoryInterface;
 use App\Contracts\PasteRepositoryInterface;
+use App\Repositories\ComplaintRepository;
 use App\Repositories\PasteRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PasteRepositoryInterface::class,
             PasteRepository::class
+        );
+        $this->app->bind(
+            ComplaintRepositoryInterface::class,
+            ComplaintRepository::class
         );
     }
 

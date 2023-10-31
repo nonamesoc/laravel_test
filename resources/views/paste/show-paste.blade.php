@@ -17,4 +17,5 @@
             @endif
         </div>
     </div>
+    <div><a href="{{route('complaint', ['paste_uri' => $paste->uri])}}" style="border: solid;">Пожаловаться</a></div>
 @endsection

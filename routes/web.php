@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\PasteController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,10 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 
     Route::get('user-pastes', [PasteController::class, 'showPastesForUser'])->name('user-pastes');
+
+    Route::get('{paste_uri}/complaint', [ComplaintController::class, 'create'])->name('complaint');
+
+    Route::post('{paste_uri}/complaint', [ComplaintController::class, 'store'])->name('complaint');
 });
 
 Route::post('create-paste', [PasteController::class, 'store'])->name('create-paste');
