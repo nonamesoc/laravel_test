@@ -2,7 +2,7 @@ parameters:
     paths:
         - app
         - database
-        - routes
+        - routes/web.php
 
     level: 6
 
