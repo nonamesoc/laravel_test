@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Contracts\ComplaintRepositoryInterface;
 use App\Models\Complaint;
+use Illuminate\Database\Eloquent\Collection;
 
 class ComplaintRepository implements ComplaintRepositoryInterface
 {
@@ -18,6 +19,14 @@ class ComplaintRepository implements ComplaintRepositoryInterface
         $complaint = Complaint::create($attributes);
 
         return $complaint;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findAll(): Collection
+    {
+        return Complaint::all();
     }
 
 }

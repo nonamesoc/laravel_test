@@ -56,4 +56,20 @@ interface PasteRepositoryInterface
      */
     public function getPastesPaginationByUser(int $user_id, int $limit = 10): LengthAwarePaginator;
 
+    /**
+     * Get all records.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<int, Paste>
+     */
+    public function findAll(): Collection;
+
+    /**
+     * Delete paste by id.
+     *
+     * @param int $id
+     *
+     * @return bool|null
+     */
+    public function delete(int $id): bool|null;
+
 }

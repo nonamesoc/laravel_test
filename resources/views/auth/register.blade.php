@@ -26,5 +26,5 @@
             <button type="submit" >Зарегистрироваться</button>
         </form>
     </div>
-    <a href="{{ route('login') }}">Уже зарегистированы?</a>
+    <a href="{{ route('login') }}">Уже зарегистрированы?</a>
 @endsection

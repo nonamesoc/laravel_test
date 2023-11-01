@@ -3,8 +3,18 @@ parameters:
         - app
         - database
         - routes/web.php
+        - app/Orchid/Screens/PastesScreen.php
 
     level: 6
+    excludePaths:
+        analyseAndScan:
+            - app/Orchid/Filters
+            - app/Orchid/Layouts
+            - app/Orchid/Presenters
+            - app/Orchid/Screens/Examples
+            - app/Orchid/Screens/Role
+            - app/Orchid/Screens/User/
+            - app/Orchid/Screens/PlatformScreen.php
 
 includes:
     - vendor/nunomaduro/larastan/extension.neon

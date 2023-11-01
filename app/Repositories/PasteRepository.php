@@ -92,4 +92,20 @@ class PasteRepository implements PasteRepositoryInterface
             ->paginate($limit);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function findAll(): Collection
+    {
+        return Paste::all();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete(int $id): bool|null
+    {
+        return Paste::findOrFail($id)->delete();
+    }
+
 }
