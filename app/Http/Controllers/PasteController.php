@@ -51,13 +51,12 @@ class PasteController extends Controller
     /**
      * Display the specified paste.
      *
-     * @param \Illuminate\Http\Request $request
      * @param string $paste_uri
      *
      * @return Application|Factory|View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function show(Request $request, string $paste_uri): Factory|View|Application {
+    public function show(string $paste_uri): Factory|View|Application {
         $paste = $this->pasteRepository->findByUri($paste_uri);
         if (!isset($paste)) {
             abort(404);

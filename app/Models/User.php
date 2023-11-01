@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
@@ -67,4 +68,6 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    use HasApiTokens;
 }

@@ -18,7 +18,11 @@ class RecentPastes
     {
     }
 
-
+    /**
+     * Bind data to the view.
+     *
+     * @param \Illuminate\View\View $view
+     */
     public function compose(View $view): void
     {
         $view->with('pastes', $this->pasteRepository->getRecentPastes());
