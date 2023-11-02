@@ -27,4 +27,5 @@
         </form>
     </div>
     <a href="{{ route('login') }}">Уже зарегистрированы?</a>
+    <a href="{{ route('login.google') }}">Войти через Google</a>
 @endsection

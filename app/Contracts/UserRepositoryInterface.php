@@ -33,4 +33,13 @@ interface UserRepositoryInterface
      */
     public function findAll(): Collection;
 
+    /**
+     * Find user by google id.
+     *
+     * @param string $google_id
+     *
+     * @return \App\Models\User|null
+     */
+    public function findUserByGoogleId(string $google_id): ?User;
+
 }

@@ -16,4 +16,5 @@
             <button type="submit" >Войти</button>
         </form>
     </div>
+    <a href="{{ route('login.google') }}">Войти через Google</a>
 @endsection

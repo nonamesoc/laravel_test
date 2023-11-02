@@ -42,4 +42,12 @@ class UserRepository implements UserRepositoryInterface
         return User::all();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function findUserByGoogleId(string $google_id): ?User
+    {
+        return User::where('google_id', $google_id)->first();
+    }
+
 }

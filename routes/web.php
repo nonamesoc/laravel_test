@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\PasteController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,11 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store'])
         ->name('login');
+
+    Route::get('/login/google', [GoogleLoginController::class, 'redirect'])
+        ->name('login.google');
+    Route::get('/login/google/callback', [GoogleLoginController::class, 'callback'])
+        ->name('login.google.callback');
 });
 
 Route::middleware('auth')->group(function () {
